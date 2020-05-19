@@ -1,5 +1,4 @@
-import { FETCH_TASKS, ISLOADING } from '../actions';
-// import { LOGIN } from '../actions';
+import { FETCH_TASKS, EDIT_TASK, ISLOADING } from '../actions';
 
 const initialState = {
   tasks: [],
@@ -15,6 +14,11 @@ export default (state = initialState, action) => {
     }
     case (ISLOADING) : {
       return { ...state, isLoading: payload};
+    }
+    case (EDIT_TASK): {
+      const index = state.tasks.findIndex(el => el._id === payload._id);
+      state.tasks[index] = payload;
+      return state;
     }
     default:
       return state;

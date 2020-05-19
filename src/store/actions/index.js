@@ -3,19 +3,18 @@ const baseUrl = 'https://ehomework-server.herokuapp.com'
 
 export const ADD_TASK = 'ADD_TASK';
 export const FETCH_TASKS = 'FETCH_TASKS';
-export const LOGIN = 'LOGIN';
+export const EDIT_TASK = 'EDIT_TASK';
 export const ISLOADING = 'ISLOADING';
-
-export const setLogin = (data) => {
-  return { type: LOGIN, payload: data }
-}
+export const TEACHER_LOGIN = 'TEACHER_LOGIN';
 
 export const setIsLoading = (status) => {
   return { type: ISLOADING, payload: status }
 }
 
+export const setLogin = (data) => {
+  return { type: TEACHER_LOGIN, payload: data }
+}
 //Login
-export const TEACHER_LOGIN = 'TEACHER_LOGIN';
 
 export function teacherLogin(email, password) {
 
@@ -116,6 +115,33 @@ export function fetchTasks() {
         const newData = Object.values(groupByName);
         console.log("GroupBy", newData);
         return dispatch({ type: FETCH_TASKS, payload: newData});
+      })
+      .catch(console.log);
+  }
+}
+
+export function updateTask(student) {
+  return (dispatch) => {
+    axios({
+      method: 'put',
+      url: baseUrl + '/task/edit/' + student._id,
+      data: { 
+        emailStudent: student.emailStudent, 
+        emailTeacher: student.emailTeacher , 
+        score: student.score, 
+        url: student.url, 
+        viewURL: student.viewURL, 
+        status: student.status, 
+        description: student.description, 
+        taskName: student.taskName 
+      },
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+      .then(({ data }) => {
+        console.log("Update tasks", data);
+        return dispatch({ type: EDIT_TASK, payload: data });
       })
       .catch(console.log);
   }

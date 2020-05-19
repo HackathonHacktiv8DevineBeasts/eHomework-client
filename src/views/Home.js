@@ -2,16 +2,18 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchTasks } from '../store/actions';
+import { fetchTasks, updateTask } from '../store/actions';
 import { Form, Button } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
+import swal from 'sweetalert';
 
 export default () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const tasks = useSelector(state => state.tasks);
   const [task, setTask] = useState({name: '', description: '', file: '', students: []});
-  // const []
+  // const [editStatus, setEditStatus] = useState({});
+  
   useEffect(() => {
     if (localStorage.token) {
       dispatch(fetchTasks());
@@ -28,6 +30,7 @@ export default () => {
 
   function toAdd(event) {
     event.preventDefault();
+    swal("Good job!", "You clicked the button!", "success");
     history.push('/form');
   }
 
@@ -40,9 +43,9 @@ export default () => {
     setTask(value);
   }
 
-  function editStudent(event) {
+  // function editStudent(event) {
 
-  }
+  // }
 
   function changeTitile(event) {
 
@@ -52,8 +55,27 @@ export default () => {
     
   }
 
-  function submitEditStudent(event) {
+  function submitEditStudent(student) {
+    swal("Congratulations!", "You have success update score!", "success");
+    dispatch(updateTask(student));
+  }
 
+  function editEmailStudent(event, index) {
+    let students = task.students;
+    students[index].emailStudent = event.target.value;
+    setTask({...task, students });
+  }
+
+  function editScoreStudent(event, index) {
+    let students = task.students;
+    students[index].score = event.target.value;
+    setTask({...task, students });
+  }
+
+  function editURLStudent(event, index) {
+    let students = task.students;
+    students[index].url = event.target.value;
+    setTask({...task, students });
   }
 
   console.log("task", task)
@@ -113,23 +135,23 @@ export default () => {
                         <td style={{padding: "0 5%"}}> 
                             <Form.Group controlId="Title">
                               <Form.Label>Email:</Form.Label>
-                              <Form.Control type="text" placeholder="Enter Title" value={student.emailStudent} readOnly/>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.emailStudent} onChange={(event) => editEmailStudent(event, index)} readOnly />
                             </Form.Group>
                             <Form.Group controlId="Title">
                               <Form.Label>URL:</Form.Label>
-                              <Form.Control type="text" placeholder="Enter Title" value={student.url} readOnly/>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.url} onChange={(event) => editURLStudent(event, index)} readOnly />
                             </Form.Group>
                             <Form.Group controlId="Title">
                               <Form.Label>Score:</Form.Label>
-                              <Form.Control type="text" placeholder="Enter Title" value={student.score} readOnly/>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.score} onChange={(event) => editScoreStudent(event, index)} readOnly={!student.status} />
                             </Form.Group>
                         </td>
                         <td style={{textAlign: "center"}}>{student.status ? "Done" : "Not Complete"}</td>
                         <td style={{textAlign: "center"}}>
-                        <Button variant="info" onClick={() => editStudent(index)}>
+                        {/* <Button variant="info" onClick={() => editStudent(index)}>
                           Edit
-                        </Button>
-                        <Button variant="primary" onClick={() => submitEditStudent(index)}>
+                        </Button> */}
+                        <Button variant="primary" onClick={() => submitEditStudent(student)}>
                           Update
                         </Button>
                         </td>

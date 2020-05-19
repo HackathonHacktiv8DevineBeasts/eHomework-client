@@ -23,7 +23,7 @@ export default () => {
 
   function checkLogin() {
     const token = localStorage.getItem('token');
-    console.log("Login", token)
+    // console.log("Login", token)
     if (token) {
       history.push('/');
     } else {
@@ -35,12 +35,12 @@ export default () => {
 
   async function onSubmit(event) {
     event.preventDefault();
-    await dispatch(teacherLogin(email, password));
-    checkLogin();
+    dispatch(teacherLogin(email, password));
+    // checkLogin();
   }
 
   return (
-    <div style={{margin: "10% 35%", boxShadow: "0 10px 10px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
+    <div style={{padding: "1% 0 1% 0", margin: "10% 35%", boxShadow: "0 10px 10px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
       <h1 style={{marginLeft: "5%"}}>
         Login
       </h1>

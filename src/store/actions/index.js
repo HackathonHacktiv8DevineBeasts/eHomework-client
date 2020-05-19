@@ -3,23 +3,30 @@ const baseUrl = 'https://ehomework-server.herokuapp.com'
 
 export const ADD_TASK = 'ADD_TASK';
 export const FETCH_TASKS = 'FETCH_TASKS';
+export const LOGIN = 'LOGIN';
+
+export const setLogin = (data) => {
+  return { type: LOGIN, payload: data }
+}
 
 //Login
 // export const TEACHER_LOGIN = 'TEACHER_LOGIN';
 
-export function teacherLogin(email, passowrd) {
+export function teacherLogin(email, password) {
+
   return (dispatch) => {
-    axios({
-      method: 'get',
-      url: baseUrl + '/login',
-      data: {
-        email,
-        passowrd
-      }
+    axios.post(`${baseUrl}/login/teacher`, {
+      email,
+      password,
+      role: 'teacher'
     })
       .then(({ data }) => {
-        console.log("Get token", data)
+        console.log('masuk sini ga, ini data login :', data);
+        dispatch(setLogin(data));
         localStorage.setItem('token', data.token);
+      })
+      .catch(err => {
+        console.log('error login');
       })
     // return { type: TEACHER_LOGIN, payload: {email, passowrd} };
   }

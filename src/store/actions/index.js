@@ -1,19 +1,56 @@
-//Login
-export const TEACHER_LOGIN = 'TEACHER_LOGIN';
+import axios from 'axios';
+const baseUrl = 'https://ehomework-server.herokuapp.com'
 
-export function teacherlogin(username, passowrd) {
-  return { type: TEACHER_LOGIN, payload: {username, passowrd} };
+export const ADD_TASK = 'ADD_TASK';
+export const FETCH_TASKS = 'FETCH_TASKS';
+
+//Login
+// export const TEACHER_LOGIN = 'TEACHER_LOGIN';
+
+export function teacherLogin(email, passowrd) {
+  return (dispatch) => {
+    axios({
+      method: 'get',
+      url: baseUrl + '/login',
+      data: {
+        email,
+        passowrd
+      }
+    })
+      .then(({ data }) => {
+        console.log("Get token", data)
+        localStorage.setItem('token', data.token);
+      })
+    // return { type: TEACHER_LOGIN, payload: {email, passowrd} };
+  }
 }
 
 //Task
-export const ADD_TASK = 'ADD_TASK';
-
 export function addTask(task) {
   return { type: ADD_TASK, payload: task };
 }
 
-export const FETCH_TASKS = 'FETCH_TASKS';
-
-export function fetchTasks(tasks) {
-  return { type: ADD_TASK, payload: tasks };
+export function fetchTasks() {
+  return (dispatch) => {
+    axios({
+      method: 'get',
+      url: baseUrl + '/tasks'
+    })
+      .then(({ data }) => {
+        const groupByName = {};
+        for (const index in data) {
+          if (groupByName[index]) {
+            groupByName[index].students.push(data[index]);
+          } else {
+            groupByName[index] = {
+              description: data[index].description,
+              students: [data[index]]
+            }
+          }
+        }
+        console.log("Get tasks", groupByName);
+        return dispatch({ type: FETCH_TASKS, payload: groupByName});
+      })
+      .catch(console.log);
+  }
 }

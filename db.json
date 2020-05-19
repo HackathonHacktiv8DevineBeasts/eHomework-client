@@ -1,0 +1,47 @@
+{
+  "login": {
+    "token": "Berhasil masuk"
+  },
+  "teacher": {
+    "email": "teacher@mail.com",
+    "password": "123"
+  },
+  "tasks": [
+    {
+      "name": "Task 1",
+      "description": "Kerjain coeg",
+      "students": [
+        {
+          "email": "student@mail.com",
+          "name": "Student 1",
+          "score": "0",
+          "progress": "Done"
+        },
+        {
+          "email": "student2@mail.com",
+          "name": "Student 2",
+          "score": "0",
+          "progress": ""
+        }
+      ]
+    },
+    {
+      "name": "Task 2",
+      "description": "Kerjain coeg",
+      "students": [
+        {
+          "email": "student@mail.com",
+          "name": "Student 1",
+          "score": "0",
+          "progress": "Done"
+        },
+        {
+          "email": "student2@mail.com",
+          "name": "Student 2",
+          "score": "0",
+          "progress": ""
+        }
+      ]
+    }
+  ]
+}

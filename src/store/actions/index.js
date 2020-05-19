@@ -27,7 +27,32 @@ export function teacherLogin(email, passowrd) {
 
 //Task
 export function addTask(task) {
-  return { type: ADD_TASK, payload: task };
+  return (dispatch) => {
+    axios({
+      method: 'post',
+      url: baseUrl + '/task',
+    })
+      .then(({ data }) => {
+        console.log("Get tasks", data);
+        const groupByName = {};
+        const result = data.result;
+        for (const index in result) {
+          if (groupByName[result[index].taskName]) {
+            groupByName[result[index].taskName].students.push(result[index]);
+          } else {
+            groupByName[result[index].taskName] = {
+              name: result[index].taskName,
+              description: result[index].description,
+              students: [result[index]]
+            }
+          }
+        }
+        const newData = Object.values(groupByName);
+        console.log("GroupBy", newData);
+        return dispatch({ type: ADD_TASK, payload: task });
+      })
+      .catch(console.log);
+  }
 }
 
 export function fetchTasks() {

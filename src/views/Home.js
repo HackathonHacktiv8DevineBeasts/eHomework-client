@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchTasks } from '../store/actions';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Accordion } from 'react-bootstrap';
 
 export default () => {
   const dispatch = useDispatch();
@@ -28,6 +28,11 @@ export default () => {
   function toAdd(event) {
     event.preventDefault();
     history.push('/form');
+  }
+
+  function toEdit(event) {
+    event.preventDefault();
+    history.push('/form', {task});
   }
 
   function taskDescription(event, value){
@@ -57,7 +62,7 @@ export default () => {
               <Button variant="primary" onClick={toAdd}>
                 Add
               </Button>
-              <Button variant="secondary" type="submit">
+              <Button variant="secondary" onClick={toEdit}>
                 Edit
               </Button>
             </div>
@@ -71,7 +76,6 @@ export default () => {
             </Form.Group>
             <Form.Group controlId="Title">
               <Form.Label>Assign to</Form.Label>
-              {/* <Form.Control type="text" /> */}
               <table style={{width: "100%"}} border="1">
                 <thead>
                   <tr>
@@ -81,10 +85,18 @@ export default () => {
                 </thead>
                 <tbody>
                   {task.students.map((student, index) => {
-                    console.log("student"+ index, student)
                     return (
                       <tr key={index}>
-                        <td style={{padding: "0 5%"}}>{student.emailStudent}</td>
+                        <td style={{padding: "0 5%"}}> 
+                          {/* <Accordion.Toggle as="text" eventKey={index}> */}
+                            {student.emailStudent}
+                          {/* </Accordion.Toggle> */}
+                          {/* <Accordion.Collapse eventKey={index}>
+                            <p>
+                              {JSON.stringify(student)}
+                            </p>
+                          </Accordion.Collapse> */}
+                        </td>
                         <td style={{textAlign: "center"}}>{student.status ? "Done" : "Not Complete"}</td>
                       </tr>
                     )

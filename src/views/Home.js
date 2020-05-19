@@ -30,7 +30,6 @@ export default () => {
 
   function toAdd(event) {
     event.preventDefault();
-    swal("Good job!", "You clicked the button!", "success");
     history.push('/form');
   }
 

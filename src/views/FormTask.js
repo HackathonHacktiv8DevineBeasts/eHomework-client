@@ -5,6 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { storage } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { addTask } from '../store/actions';
+import swal from 'sweetalert';
 
 export default () => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ export default () => {
         console.log("task uploaded", newTask)
         console.log("URL", url)
         dispatch(addTask(newTask));
+        swal("Congratulations!", "You have successfully add new task!", "success");
         history.push('/');
       })
       })

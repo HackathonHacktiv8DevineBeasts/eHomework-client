@@ -1,9 +1,10 @@
 import { FETCH_TASKS } from '../actions';
 
 const initialState = {
-  // teacher: {
-  //   email: ""
-  // },
+  teacher: {
+    email: "",
+    token: ""
+  },
   tasks: []
 }
 

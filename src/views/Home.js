@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchTasks } from '../store/actions';
-import { Form, Button, Accordion } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 
 export default () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const tasks = useSelector(state => state.tasks);
-  const [task, setTask] = useState({name: '', description: '', students: []});
-
+  const [task, setTask] = useState({name: '', description: '', file: '', students: []});
+  // const []
   useEffect(() => {
     if (localStorage.token) {
       dispatch(fetchTasks());
@@ -30,13 +30,29 @@ export default () => {
     history.push('/form');
   }
 
-  function toEdit(event) {
-    event.preventDefault();
-    history.push('/form', {task});
-  }
+  // function toEdit(event) {
+  //   event.preventDefault();
+  //   history.push('/form', {task});
+  // }
 
   function taskDescription(event, value){
     setTask(value);
+  }
+
+  function editStudent(event) {
+
+  }
+
+  function changeTitile(event) {
+
+  }
+
+  function changeDescription(event) {
+    
+  }
+
+  function submitEditStudent(event) {
+
   }
 
   console.log("task", task)
@@ -62,17 +78,21 @@ export default () => {
               <Button variant="primary" onClick={toAdd}>
                 Add
               </Button>
-              <Button variant="secondary" onClick={toEdit}>
+              {/* <Button variant="secondary" onClick={toEdit}>
                 Edit
-              </Button>
+              </Button> */}
             </div>
             <Form.Group controlId="Title">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" placeholder="Enter Title" value={task.name} readOnly/>
+              <Form.Control type="text" placeholder="Enter Title" value={task.name} onChange={changeTitile} readOnly/>
+            </Form.Group>
+            <Form.Group controlId="Title">
+              <Form.Label>URL</Form.Label>
+              <Form.Control type="url" placeholder="Enter Title" value={task.file} onChange={changeTitile} readOnly/>
             </Form.Group>
             <Form.Group controlId="Description">
               <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows="3" placeholder="Enter Description" value={task.description} readOnly />
+              <Form.Control as="textarea" rows="3" placeholder="Enter Description" value={task.description} onChange={changeDescription} readOnly />
             </Form.Group>
             <Form.Group controlId="Title">
               <Form.Label>Assign to</Form.Label>
@@ -81,23 +101,36 @@ export default () => {
                   <tr>
                     <th style={{textAlign: "center", width: "70%"}}>Student</th>
                     <th style={{textAlign: "center"}}>Progress</th>
+                    <th style={{textAlign: "center"}}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {task.students.map((student, index) => {
                     return (
-                      <tr key={index}>
+                      <tr key={student._id}>
                         <td style={{padding: "0 5%"}}> 
-                          {/* <Accordion.Toggle as="text" eventKey={index}> */}
-                            {student.emailStudent}
-                          {/* </Accordion.Toggle> */}
-                          {/* <Accordion.Collapse eventKey={index}>
-                            <p>
-                              {JSON.stringify(student)}
-                            </p>
-                          </Accordion.Collapse> */}
+                            <Form.Group controlId="Title">
+                              <Form.Label>Email:</Form.Label>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.emailStudent} readOnly/>
+                            </Form.Group>
+                            <Form.Group controlId="Title">
+                              <Form.Label>URL:</Form.Label>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.url} readOnly/>
+                            </Form.Group>
+                            <Form.Group controlId="Title">
+                              <Form.Label>Score:</Form.Label>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.score} readOnly/>
+                            </Form.Group>
                         </td>
                         <td style={{textAlign: "center"}}>{student.status ? "Done" : "Not Complete"}</td>
+                        <td style={{textAlign: "center"}}>
+                        <Button variant="info" onClick={() => editStudent(index)}>
+                          Edit
+                        </Button>
+                        <Button variant="primary" onClick={() => submitEditStudent(index)}>
+                          Update
+                        </Button>
+                        </td>
                       </tr>
                     )
                   })}

@@ -11,6 +11,7 @@ export default () => {
   const history = useHistory();
   const state = useLocation().state;
   const [task, setTask] = useState(state ? state.task : {name: '', description: '', file: '', students: []});
+  const [image, setImage] = useState({});
 
   function goBack(event) {
     event.preventDefault();
@@ -22,37 +23,40 @@ export default () => {
   }
 
   function changeTaskDescription(event) {
-    setTask({...task, name: event.target.value});
+    setTask({...task, description: event.target.value});
   }
 
-  function deleteStudent(index) {
-    task.students.splice(index, 1);
-    setTask(task);
-    console.log(task)
-  }
+  // function deleteStudent(index) {
+  //   task.students.splice(index, 1);
+  //   setTask(task);
+  //   console.log(task)
+  // }
 
-  function addStudent() {
-    task.students.push('');
-    setTask(task);
-    console.log(task)
-  }
+  // function addStudent() {
+  //   task.students.push('');
+  //   setTask(task);
+  //   console.log(task)
+  // }
 
   function onSubmit(event) {
     event.preventDefault();
-    if (task.file) {
-      const upload = storage.ref(`/${task.file.name}`).put(task.file)
+    if (image) {
+      const upload = storage.ref(`/${image.name}`).put(image)
       upload.on('state_changed', (snapshot) => {}, (err) => { console.log(err) }, () => {
-      storage.ref('/').child(task.file.name).getDownloadURL()
+      storage.ref('/').child(image.name).getDownloadURL()
       .then(url => {
-          let newTask = { ...task, url, status: true }
-          dispatch(addTask(newTask))
+        let newTask = { ...task, file: url}
+        console.log("task uploaded", newTask)
+        console.log("URL", url)
+        dispatch(addTask(newTask));
+        history.push('/');
       })
       })
     }
   }
 
   function changeFile(event) {
-    setTask({...task, file: event.target.value});
+    setImage(event.target.files[0]);
   }
 
   console.log("task", task)
@@ -68,13 +72,13 @@ export default () => {
         </Form.Group>
         <Form.Group controlId="Title">
           <Form.Label>Task URL</Form.Label>
-          <Form.Control type="file" placeholder="Choose file" value={task.name} onChange={changeFile} />
+          <Form.Control type="file" placeholder="Choose file" onChange={changeFile} />
         </Form.Group>
         <Form.Group controlId="Description">
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows="3" placeholder="Enter Description" value={task.description} onChange={changeTaskDescription} />
         </Form.Group>
-        <Form.Group controlId="Title">
+        {/* <Form.Group controlId="Title">
           <Form.Label>Assign to</Form.Label>
           <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between"}}>
             {task.students[0] ? task.students.map((student,index) => {
@@ -94,7 +98,7 @@ export default () => {
               )
             }) : <Form.Control type="text" />}
           </div>
-        </Form.Group>
+        </Form.Group> */}
         <div style={{display: "flex", justifyContent: "space-between"}}>
           <Button variant="primary" type="submit">
             {state ? "Update" : "Add"}

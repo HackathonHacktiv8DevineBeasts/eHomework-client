@@ -33,10 +33,12 @@ export default () => {
     }
   }
 
-  async function onSubmit(event) {
+  function onSubmit(event) {
     event.preventDefault();
-    await dispatch(teacherLogin(email, password));
-    checkLogin();
+    dispatch(teacherLogin(email, password))
+      .then(() => {
+        checkLogin();
+      })
   }
 
   return (

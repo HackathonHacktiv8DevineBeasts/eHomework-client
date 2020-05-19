@@ -10,8 +10,8 @@ export default () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const tasks = useSelector(state => state.tasks);
-  const [task, setTask] = useState({name: '', description: '', students: []});
-
+  const [task, setTask] = useState({name: '', description: '', file: '', students: []});
+  // const []
   useEffect(() => {
     if (localStorage.token) {
       dispatch(fetchTasks());
@@ -31,8 +31,29 @@ export default () => {
     history.push('/form');
   }
 
+  // function toEdit(event) {
+  //   event.preventDefault();
+  //   history.push('/form', {task});
+  // }
+
   function taskDescription(event, value){
     setTask(value);
+  }
+
+  function editStudent(event) {
+
+  }
+
+  function changeTitile(event) {
+
+  }
+
+  function changeDescription(event) {
+    
+  }
+
+  function submitEditStudent(event) {
+
   }
 
   console.log("task", task)
@@ -40,54 +61,78 @@ export default () => {
     <div style={{display: "flex", width: "100%", height: "100%"}}>
       {/* Tasks List */}
       <Navbar />
-      <div style={{width: "30vw", height: "auto", backgroundColor: "#e5e5e5", margin: "5% auto"}}>
-        <h3 style={{textAlign: "center", marginTop: "10px"}} className="task">Tasks List</h3>
+      <div style={{width: "30vw", height: "auto", justifyContent: "center", backgroundColor: "#e5e5e5", margin: "6% auto"}}>
+        <h3 style={{textAlign: "center", marginTop: "10px", textDecoration: "underline"}} className="task">Tasks List</h3>
         <div>
           {tasks.map((el, index) => {
             return (
-              <h5 variant="light" style={{width: "100%", boxShadow: "0 0 10px 5px grey", marginTop: "6%", cursor: "pointer"}} key={index} onClick={(event) => taskDescription(event, el)}>{el.name}</h5>
+              <h5 className="task-list" variant="light" style={{textAlign:"center", width: "80%", boxShadow: "0 0 10px 5px grey", margin: "6% auto", padding: "5%", borderRadius: "5px", cursor: "pointer"}} key={index} onClick={(event) => taskDescription(event, el)}>{el.name}</h5>
             )
           })}
         </div>
       </div>
       {/* Task Description */}
-      <div style={{width: "70vw", height: "100%", margin: "5% auto"}}>
-        <h3 style={{textAlign: "center", marginTop: "10px"}} className="task">Task</h3>
+      <div style={{width: "70vw", height: "100%", margin: "7% auto", backgroundColor: "#ffffff", borderRadius: "5px"}}>
+        <h3 style={{textAlign: "center", marginTop: "10px", textDecoration:"underline"}} className="task">Task</h3>
         <div>
           <Form style={{margin: "5% 5%"}}>
-            <div style={{display: "flex", justifyContent: "space-between", marginBottom: "2%"}}>
-              <Button className="btn-home" variant="primary" onClick={toAdd}>
+            <div className="btn-home" style={{display: "flex", justifyContent: "space-between", marginBottom: "3%"}}>
+              <Button variant="primary" onClick={toAdd}>
                 Add
               </Button>
-              <Button className="btn-home" variant="secondary" type="submit">
+              {/* <Button variant="secondary" onClick={toEdit}>
                 Edit
-              </Button>
+              </Button> */}
             </div>
             <Form.Group controlId="Title">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" placeholder="Enter Title" value={task.name} readOnly/>
+              <Form.Control type="text" placeholder="Enter Title" value={task.name} onChange={changeTitile} readOnly/>
+            </Form.Group>
+            <Form.Group controlId="Title">
+              <Form.Label>URL</Form.Label>
+              <Form.Control type="url" placeholder="Enter Title" value={task.file} onChange={changeTitile} readOnly/>
             </Form.Group>
             <Form.Group controlId="Description">
               <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows="3" placeholder="Enter Description" value={task.description} readOnly />
+              <Form.Control as="textarea" rows="3" placeholder="Enter Description" value={task.description} onChange={changeDescription} readOnly />
             </Form.Group>
             <Form.Group controlId="Title">
               <Form.Label>Assign to</Form.Label>
-              {/* <Form.Control type="text" /> */}
               <table style={{width: "100%"}} border="1">
                 <thead>
                   <tr>
                     <th style={{textAlign: "center", width: "70%"}}>Student</th>
                     <th style={{textAlign: "center"}}>Progress</th>
+                    <th style={{textAlign: "center"}}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {task.students.map((student, index) => {
-                    console.log("student"+ index, student)
                     return (
-                      <tr key={index}>
-                        <td style={{padding: "0 5%"}}>{student.emailStudent}</td>
+                      <tr key={student._id}>
+                        <td style={{padding: "0 5%"}}> 
+                            <Form.Group controlId="Title">
+                              <Form.Label>Email:</Form.Label>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.emailStudent} readOnly/>
+                            </Form.Group>
+                            <Form.Group controlId="Title">
+                              <Form.Label>URL:</Form.Label>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.url} readOnly/>
+                            </Form.Group>
+                            <Form.Group controlId="Title">
+                              <Form.Label>Score:</Form.Label>
+                              <Form.Control type="text" placeholder="Enter Title" value={student.score} readOnly/>
+                            </Form.Group>
+                        </td>
                         <td style={{textAlign: "center"}}>{student.status ? "Done" : "Not Complete"}</td>
+                        <td style={{textAlign: "center"}}>
+                        <Button variant="info" onClick={() => editStudent(index)}>
+                          Edit
+                        </Button>
+                        <Button variant="primary" onClick={() => submitEditStudent(index)}>
+                          Update
+                        </Button>
+                        </td>
                       </tr>
                     )
                   })}

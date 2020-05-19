@@ -15,7 +15,7 @@ export const setIsLoading = (status) => {
 }
 
 //Login
-// export const TEACHER_LOGIN = 'TEACHER_LOGIN';
+export const TEACHER_LOGIN = 'TEACHER_LOGIN';
 
 export function teacherLogin(email, password) {
 
@@ -47,14 +47,23 @@ export function teacherLogin(email, password) {
 
 //Task
 export function addTask(task) {
-  return { type: ADD_TASK, payload: task };
-}
-
-export function fetchTasks() {
   return (dispatch) => {
     axios({
-      method: 'get',
-      url: baseUrl + '/task'
+      method: 'post',
+      url: baseUrl + '/task',
+      data: { 
+        emailStudent: '-', 
+        emailTeacher: 'teacher27@mail.com', 
+        score: 0, 
+        url: '-', 
+        viewURL: task.file, 
+        status: false, 
+        description: task.description, 
+        taskName: task.name 
+      },
+      headers: {
+        token: localStorage.getItem('token')
+      }
     })
       .then(({ data }) => {
         console.log("Get tasks", data);
@@ -67,6 +76,39 @@ export function fetchTasks() {
             groupByName[result[index].taskName] = {
               name: result[index].taskName,
               description: result[index].description,
+              students: [result[index]]
+            }
+          }
+        }
+        const newData = Object.values(groupByName);
+        console.log("GroupBy", newData);
+        return dispatch({ type: ADD_TASK, payload: task });
+      })
+      .catch(console.log);
+  }
+}
+
+export function fetchTasks() {
+  return (dispatch) => {
+    axios({
+      method: 'get',
+      url: baseUrl + '/task',
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+      .then(({ data }) => {
+        console.log("Get tasks", data);
+        const groupByName = {};
+        const result = data.result;
+        for (const index in result) {
+          if (groupByName[result[index].taskName]) {
+            groupByName[result[index].taskName].students.push(result[index]);
+          } else {
+            groupByName[result[index].taskName] = {
+              name: result[index].taskName,
+              description: result[index].description,
+              file: result[index].viewURL,
               students: [result[index]]
             }
           }

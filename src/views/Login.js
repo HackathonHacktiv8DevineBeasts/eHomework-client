@@ -34,7 +34,7 @@ export default () => {
     }
   }
 
-  async function onSubmit(event) {
+  function onSubmit(event) {
     event.preventDefault();
     dispatch(teacherLogin(email, password))
       .then(_ => {

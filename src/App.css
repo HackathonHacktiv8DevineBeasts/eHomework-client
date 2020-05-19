@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #e5e5e5;
 }
 .login {
   width: 100%;
@@ -20,14 +21,27 @@
   font-family: 'Libre Baskerville', serif;
   font-family: 'Montserrat', sans-serif;
 }
+.task-list:hover {
+  background-color: #00a1ab;
+  color: #ecececec
+}
 .formAdd {
   background-color: #f7f7f9;
 }
-.formAdd button, .btn-home {
+.formAdd button {
   width: 20%
+}
+.btn-home button {
+  width: 20%
+}
+.btn-home button:hover {
+  background-color: #00a1ab;
 }
 .formAdd button:hover {
   background-color: #00a1ab;
+}
+.formAdd .btn-back:hover {
+  background-color: #f12d0b;
 }
 .btn-home button:hover {
   background-color: #00a1ab;
@@ -43,7 +57,7 @@
   background-color: #00a1ab;
 }
 .loader {
-  color: #09f156;
+  color: #1eb2a6;
   font-size: 20px;
   margin: 45vh auto;
   width: 1em;

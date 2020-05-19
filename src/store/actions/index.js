@@ -39,18 +39,21 @@ export function fetchTasks() {
       .then(({ data }) => {
         console.log("Get tasks", data);
         const groupByName = {};
-        for (const index in data.result) {
-          if (groupByName[index]) {
-            groupByName[index].students.push(data[index]);
+        const result = data.result;
+        for (const index in result) {
+          if (groupByName[result[index].taskName]) {
+            groupByName[result[index].taskName].students.push(result[index]);
           } else {
-            groupByName[index] = {
-              description: data[index].description,
-              students: [data[index]]
+            groupByName[result[index].taskName] = {
+              name: result[index].taskName,
+              description: result[index].description,
+              students: [result[index]]
             }
           }
         }
-        console.log("GroupBy", groupByName);
-        return dispatch({ type: FETCH_TASKS, payload: groupByName});
+        const newData = Object.values(groupByName);
+        console.log("GroupBy", newData);
+        return dispatch({ type: FETCH_TASKS, payload: newData});
       })
       .catch(console.log);
   }

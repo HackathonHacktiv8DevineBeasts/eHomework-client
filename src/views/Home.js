@@ -34,7 +34,7 @@ export default () => {
   return (
     <div style={{display: "flex", width: "100%", height: "100%"}}>
       {/* Tasks List */}
-      <div style={{width: "30vw", height: "100%", backgroundColor: "blue"}}>
+      <div style={{width: "30vw", height: "100%"}}>
         <h3 style={{textAlign: "center"}}>Tasks List</h3>
         <div>
           {tasks.map((el, index) => {
@@ -45,7 +45,7 @@ export default () => {
         </div>
       </div>
       {/* Task Description */}
-      <div style={{width: "70vw", height: "100%", backgroundColor: "yellow"}}>
+      <div style={{width: "70vw", height: "100%"}}>
         <h3 style={{textAlign: "center"}}>Task</h3>
         <div>
           <Form style={{margin: "5% 5%"}}>

@@ -1,16 +1,18 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { teacherLogin } from '../store/actions';
 import { useHistory } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 export default () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const l
+  const isLoading = useSelector(state => state.isLoading);
 
   useEffect(checkLogin, []);
 
@@ -38,6 +40,10 @@ export default () => {
     event.preventDefault();
     dispatch(teacherLogin(email, password));
     checkLogin();
+  }
+
+  if (isLoading) {
+    return <Loading />
   }
 
   return (

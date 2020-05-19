@@ -4,9 +4,14 @@ const baseUrl = 'https://ehomework-server.herokuapp.com'
 export const ADD_TASK = 'ADD_TASK';
 export const FETCH_TASKS = 'FETCH_TASKS';
 export const LOGIN = 'LOGIN';
+export const ISLOADING = 'ISLOADING';
 
 export const setLogin = (data) => {
   return { type: LOGIN, payload: data }
+}
+
+export const setIsLoading = (status) => {
+  return { type: ISLOADING, payload: status }
 }
 
 //Login
@@ -15,6 +20,7 @@ export const setLogin = (data) => {
 export function teacherLogin(email, password) {
 
   return (dispatch) => {
+    dispatch(setIsLoading(true));
     axios.post(`${baseUrl}/login/teacher`, {
       email,
       password,
@@ -27,6 +33,11 @@ export function teacherLogin(email, password) {
       })
       .catch(err => {
         console.log('error login');
+      })
+      .finally(_ => {
+        setTimeout(() => {
+          dispatch(setIsLoading(false));
+        }, 3000)
       })
     // return { type: TEACHER_LOGIN, payload: {email, passowrd} };
   }

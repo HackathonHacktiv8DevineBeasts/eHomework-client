@@ -30,6 +30,10 @@ export default () => {
     history.push('/form');
   }
 
+  function taskDescription(event, value){
+    setTask(value);
+  }
+
   console.log("task", task)
   return (
     <div style={{display: "flex", width: "100%", height: "100%"}}>
@@ -39,7 +43,7 @@ export default () => {
         <div>
           {tasks.map((el, index) => {
             return (
-              <h5 variant="light" style={{width: "100%", boxShadow: "0 0 10px 5px grey", marginTop: "6%", cursor: "pointer"}} key={index}>{el.name}</h5>
+              <h5 variant="light" style={{width: "100%", boxShadow: "0 0 10px 5px grey", marginTop: "6%", cursor: "pointer"}} key={index} onClick={(event) => taskDescription(event, el)}>{el.name}</h5>
             )
           })}
         </div>

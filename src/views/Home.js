@@ -30,22 +30,22 @@ export default () => {
     history.push('/form');
   }
 
-  console.log("task", tasks)
+  console.log("task", task)
   return (
     <div style={{display: "flex", width: "100%", height: "100%"}}>
       {/* Tasks List */}
-      <div style={{width: "30vw", height: "100vh", backgroundColor: "blue"}}>
+      <div style={{width: "30vw", height: "100%"}}>
         <h3 style={{textAlign: "center"}}>Tasks List</h3>
         <div>
           {tasks.map((el, index) => {
             return (
-              <h5 variant="light" style={{width: "100%", boxShadow: "0 0 10px 5px grey", marginTop: "6%", cursor: "pointer"}} key={index}>{index}</h5>
+              <h5 variant="light" style={{width: "100%", boxShadow: "0 0 10px 5px grey", marginTop: "6%", cursor: "pointer"}} key={index}>{el.name}</h5>
             )
           })}
         </div>
       </div>
       {/* Task Description */}
-      <div style={{width: "70vw", height: "100vh", backgroundColor: "yellow"}}>
+      <div style={{width: "70vw", height: "100%"}}>
         <h3 style={{textAlign: "center"}}>Task</h3>
         <div>
           <Form style={{margin: "5% 5%"}}>
@@ -77,10 +77,11 @@ export default () => {
                 </thead>
                 <tbody>
                   {task.students.map((student, index) => {
+                    console.log("student"+ index, student)
                     return (
                       <tr key={index}>
-                        <td style={{padding: "0 5%"}}>{student.name}</td>
-                        <td style={{textAlign: "center"}}>{student.progress}</td>
+                        <td style={{padding: "0 5%"}}>{student.emailStudent}</td>
+                        <td style={{textAlign: "center"}}>{student.status ? "Done" : "Not Complete"}</td>
                       </tr>
                     )
                   })}

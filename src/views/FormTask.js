@@ -15,7 +15,7 @@ export default () => {
       <h1 style={{marginLeft: "5%"}}>
         Add Task
       </h1>
-      <Form style={{margin: "5% 5%"}} onReset={{goBack}}>
+      <Form style={{margin: "5% 5%"}} onReset={goBack}>
         <Form.Group controlId="Title">
           <Form.Label>Title</Form.Label>
           <Form.Control type="text" placeholder="Enter Title" />

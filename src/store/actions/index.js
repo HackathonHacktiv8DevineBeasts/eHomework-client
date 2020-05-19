@@ -34,11 +34,12 @@ export function fetchTasks() {
   return (dispatch) => {
     axios({
       method: 'get',
-      url: baseUrl + '/tasks'
+      url: baseUrl + '/task'
     })
       .then(({ data }) => {
+        console.log("Get tasks", data);
         const groupByName = {};
-        for (const index in data) {
+        for (const index in data.result) {
           if (groupByName[index]) {
             groupByName[index].students.push(data[index]);
           } else {
@@ -48,7 +49,7 @@ export function fetchTasks() {
             }
           }
         }
-        console.log("Get tasks", groupByName);
+        console.log("GroupBy", groupByName);
         return dispatch({ type: FETCH_TASKS, payload: groupByName});
       })
       .catch(console.log);

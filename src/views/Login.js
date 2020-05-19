@@ -10,6 +10,7 @@ export default () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // const l
 
   useEffect(checkLogin, []);
 
@@ -36,7 +37,7 @@ export default () => {
   async function onSubmit(event) {
     event.preventDefault();
     dispatch(teacherLogin(email, password));
-    // checkLogin();
+    checkLogin();
   }
 
   return (

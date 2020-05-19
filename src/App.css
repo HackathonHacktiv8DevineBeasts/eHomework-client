@@ -1,11 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Montserrat:wght@500&display=swap');
 .App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Libre Baskerville', serif;
+  font-family: 'Montserrat', sans-serif;
+  background-image: url(https://i.ibb.co/3W3S5Xj/Pngtree-the-companys-business-partner-xie-3737636.png);
+  background-size: 100% 160%;
+  background-position-y: center;
+}
+.task {
+  font-family: 'Libre Baskerville', serif;
+  font-family: 'Montserrat', sans-serif;
+}
+.formAdd {
+  background-color: #f7f7f9;
+}
+.formAdd button, .btn-home {
+  width: 20%
+}
+.formAdd button:hover {
+  background-color: #00a1ab;
+}
+.btn-home button:hover {
+  background-color: #00a1ab;
+}
+.login input[type="password"] , input[type="email"] {
+  font-size: 20px;
+  width: 180%;
+}
+.login button {
+  width: 180%;
+}
+.login button:hover {
+  background-color: #00a1ab;
 }
 .loader {
   color: #09f156;
   font-size: 20px;
-  margin: 50vh auto;
+  margin: 45vh auto;
   width: 1em;
   height: 1em;
   border-radius: 50%;

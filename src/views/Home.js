@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchTasks } from '../store/actions';
 import { Form, Button } from 'react-bootstrap';
+import Navbar from '../components/Navbar';
 
 export default () => {
   const dispatch = useDispatch();
@@ -38,8 +39,9 @@ export default () => {
   return (
     <div style={{display: "flex", width: "100%", height: "100%"}}>
       {/* Tasks List */}
-      <div style={{width: "30vw", height: "100%"}}>
-        <h3 style={{textAlign: "center"}}>Tasks List</h3>
+      <Navbar />
+      <div style={{width: "30vw", height: "auto", backgroundColor: "#e5e5e5", margin: "5% auto"}}>
+        <h3 style={{textAlign: "center", marginTop: "10px"}} className="task">Tasks List</h3>
         <div>
           {tasks.map((el, index) => {
             return (
@@ -49,15 +51,15 @@ export default () => {
         </div>
       </div>
       {/* Task Description */}
-      <div style={{width: "70vw", height: "100%"}}>
-        <h3 style={{textAlign: "center"}}>Task</h3>
+      <div style={{width: "70vw", height: "100%", margin: "5% auto"}}>
+        <h3 style={{textAlign: "center", marginTop: "10px"}} className="task">Task</h3>
         <div>
           <Form style={{margin: "5% 5%"}}>
             <div style={{display: "flex", justifyContent: "space-between", marginBottom: "2%"}}>
-              <Button variant="primary" onClick={toAdd}>
+              <Button className="btn-home" variant="primary" onClick={toAdd}>
                 Add
               </Button>
-              <Button variant="secondary" type="submit">
+              <Button className="btn-home" variant="secondary" type="submit">
                 Edit
               </Button>
             </div>

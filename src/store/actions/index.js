@@ -20,26 +20,28 @@ export const setIsLoading = (status) => {
 export function teacherLogin(email, password) {
 
   return (dispatch) => {
-    dispatch(setIsLoading(true));
-    axios.post(`${baseUrl}/login/teacher`, {
-      email,
-      password,
-      role: 'teacher'
+    return new Promise((resolve, reject) => {
+      dispatch(setIsLoading(true));
+      axios.post(`${baseUrl}/login/teacher`, {
+        email,
+        password,
+        role: 'teacher'
+      })
+        .then(({ data }) => {
+          dispatch(setLogin(data));
+          localStorage.setItem('token', data.token);
+          resolve(data)
+        })
+        .catch(err => {
+          console.log('error login');
+          reject(err)
+        })
+        .finally(_ => {
+          setTimeout(() => {
+            dispatch(setIsLoading(false));
+          }, 3000)
+        })
     })
-      .then(({ data }) => {
-        console.log('masuk sini ga, ini data login :', data);
-        dispatch(setLogin(data));
-        localStorage.setItem('token', data.token);
-      })
-      .catch(err => {
-        console.log('error login');
-      })
-      .finally(_ => {
-        setTimeout(() => {
-          dispatch(setIsLoading(false));
-        }, 3000)
-      })
-    // return { type: TEACHER_LOGIN, payload: {email, passowrd} };
   }
 }
 

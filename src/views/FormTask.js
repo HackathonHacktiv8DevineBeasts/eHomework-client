@@ -11,22 +11,22 @@ export default () => {
   }
 
   return (
-    <div style={{margin: "5% 20%", boxShadow: "0 10px 10px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
-      <h1 style={{marginLeft: "5%"}}>
+    <div className="formAdd" style={{margin: "5% 20%", width: "100%", borderRadius: "5px", boxShadow: "0 5px 5px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
+      <h1 style={{margin: "5% 5%"}}>
         Add Task
       </h1>
       <Form style={{margin: "5% 5%"}} onReset={goBack}>
         <Form.Group controlId="Title">
           <Form.Label>Title</Form.Label>
-          <Form.Control type="text" placeholder="Enter Title" />
+          <Form.Control type="text" placeholder="Enter Title" required/>
         </Form.Group>
         <Form.Group controlId="Description">
           <Form.Label>Description</Form.Label>
-          <Form.Control as="textarea" rows="3" placeholder="Enter Description" />
+          <Form.Control as="textarea" rows="3" placeholder="Enter Description" required/>
         </Form.Group>
         <Form.Group controlId="Title">
           <Form.Label>Assign to</Form.Label>
-          <Form.Control type="text" />
+          <Form.Control type="text" required/>
         </Form.Group>
         <div style={{display: "flex", justifyContent: "space-between"}}>
           <Button variant="primary" type="submit">
